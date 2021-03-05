@@ -3,8 +3,8 @@ name: Docker Images Publish
 on:
   push:
     branches:
-      - master
-      paths-ignore:
+      - "master"
+    paths-ignore:
       - ".gitignore"
       - "*.md"
       - "*.png"
