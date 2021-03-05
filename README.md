@@ -2,6 +2,7 @@
 
 你的下一个终端。
 
+
 ![Docker image](https://github.com/dushixiang/next-terminal/workflows/Docker%20image/badge.svg?branch=master)
 
 ## 快速了解
