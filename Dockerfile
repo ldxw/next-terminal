@@ -1,4 +1,4 @@
-FROM golang:alpine as builder
+FROM golang:1.15-stretch as builder
 
 ENV GO111MODULE=on
 
