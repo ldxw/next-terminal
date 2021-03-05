@@ -23,10 +23,6 @@ jobs:
           cd web
           npm install
           npm run build
-
-        name: Prepare
-        id: pre
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/v}
       -
         name: Login to DockerHub
         uses: docker/login-action@v1 
