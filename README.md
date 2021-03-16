@@ -1,6 +1,6 @@
 # Next Terminal
 
-你的下一个终端。
+下一代终端。
 
 
 ![Docker image](https://github.com/dushixiang/next-terminal/workflows/Docker%20image/badge.svg?branch=master)
@@ -23,6 +23,7 @@ Next Terminal基于 [Apache Guacamole](https://guacamole.apache.org/) 开发，�
 - 资产标签
 - 资产授权
 - 多用户&用户分组
+- 计划任务
 
 ## 在线体验
 
@@ -30,7 +31,13 @@ https://next-terminal.typesafe.cn/
 
 test/test
 
+## 协议与条款
+
+如您需要在企业网络中使用 next-terminal，建议先征求 IT 管理员的同意。下载、使用或分发 next-terminal 前，您必须同意 [协议](./LICENSE) 条款与限制。本项目不提供任何担保，亦不承担任何责任。
+
 ## 快速安装
+
+> 本项目未进行严格的安全性测试，不建议部署安装在公网环境。
 
 - [使用docker安装](docs/install-docker.md)
 - [原生安装](docs/install-naive.md)

@@ -91,7 +91,7 @@ func LoginSuccess(c echo.Context, loginAccount LoginAccount, user model.User) (t
 		User:     user,
 	}
 
-	cacheKey := strings.Join([]string{Token, token}, ":")
+	cacheKey := BuildCacheKeyByToken(token)
 
 	if authorization.Remember {
 		// 记住登录有效期两周
@@ -117,6 +117,16 @@ func LoginSuccess(c echo.Context, loginAccount LoginAccount, user model.User) (t
 	// 修改登录状态
 	model.UpdateUserById(&model.User{Online: true}, user.ID)
 	return token, nil
+}
+
+func BuildCacheKeyByToken(token string) string {
+	cacheKey := strings.Join([]string{Token, token}, ":")
+	return cacheKey
+}
+
+func GetTokenFormCacheKey(cacheKey string) string {
+	token := strings.Split(cacheKey, ":")[1]
+	return token
 }
 
 func loginWithTotpEndpoint(c echo.Context) error {
@@ -165,13 +175,19 @@ func loginWithTotpEndpoint(c echo.Context) error {
 
 func LogoutEndpoint(c echo.Context) error {
 	token := GetToken(c)
-	cacheKey := strings.Join([]string{Token, token}, ":")
+	cacheKey := BuildCacheKeyByToken(token)
 	global.Cache.Delete(cacheKey)
-	model.Logout(token)
+	err := model.Logout(token)
+	if err != nil {
+		return err
+	}
 	return Success(c, nil)
 }
 
 func ConfirmTOTPEndpoint(c echo.Context) error {
+	if global.Config.Demo {
+		return Fail(c, 0, "演示模式禁止开启两步验证")
+	}
 	account, _ := GetCurrentAccount(c)
 
 	var confirmTOTP ConfirmTOTP
@@ -229,6 +245,9 @@ func ResetTOTPEndpoint(c echo.Context) error {
 }
 
 func ChangePasswordEndpoint(c echo.Context) error {
+	if global.Config.Demo {
+		return Fail(c, 0, "演示模式禁止修改密码")
+	}
 	account, _ := GetCurrentAccount(c)
 
 	var changePassword ChangePassword
